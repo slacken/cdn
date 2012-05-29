@@ -1,0 +1,9 @@
+name: mysaecdn
+version: 1
+handle:
+- compress: if ( out_header["Content-type"]=="text/html" ) compress
+- compress: if ( out_header["Content-type"]=="text/javascript" ) compress
+- compress: if ( out_header["Content-type"]=="text/css" ) compress
+- compress: if ( out_header["Content-type"]=="image/jpeg" ) compress
+- compress: if ( out_header["Content-type"]=="image/png" ) compress
+- rewrite: if ( !is_dir() && !is_file() && path ~ "^(.*)$" ) goto "index.php?q=$1"
