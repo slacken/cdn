@@ -12,7 +12,7 @@ class controller{
 	
 	public function __construct($request = ''){
 		
-		$this->content_type = 'text/plain';
+		$this->content_type = 'text/html';
 		$this->error_type = 0;
 		$this->succeed = TRUE;
 		
@@ -73,6 +73,8 @@ class controller{
 			if(empty($content)){
 				$this->error_type = 3;
 				$this->succeed = FALSE;
+			}else{
+				//这里应该有更多的检查
 			}
 		}
 		//显示内容

@@ -22,7 +22,6 @@ class view{
 		$page = BASE_PATH.'views/'.trim($page,'/').'.php';
 		if(is_readable($page)){
 			ob_start();
-			
 	    	include $page;
 	    	ob_end_flush();
 		}
