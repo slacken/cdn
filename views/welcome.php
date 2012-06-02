@@ -44,7 +44,7 @@ blockquote{
     background-color:#f0f0f0;
     margin: 10px 0px;
 }
-pre{
+code{
     font-size:13px;
     font-family:Consolas;
     line-height:16px;
@@ -111,27 +111,31 @@ h1.page-header{
                     <ul> 
                         <li><strong>部署代码：</strong>可以手动部署（即创建应用、上传代码）或者在线安装<span class="small">（还没有通过审核o(︶︿︶)o）</span>。</li> 
                         <li><strong>配置程序：</strong>如果是手动部署，则要先在SAE后台创建一个storage的domain。然后设置index.php，修改下面的四个常量：
-<pre> 
+<?php
+$code = <<<CODE
+<?php
 /**
  * 网站静态文件的根目录对应的URL地址
  * */
 define('STATIC_URL','http://www.baidu.com/');
- 
+
 /**
  * SAE storage的domain
  * */
 define('DOMAIN','cdn');
- 
+
 /**
  * 空请求时是否显示本文档
  * */
 define('WELCOME_DOC',TRUE);
- 
+
 /**
  * 运行环境:development/testing/production
  * */
 define('ENVIRONMENT','production');
-</pre></li> 
+CODE;
+highlight_string($code);
+?></li> 
                         <li><strong>使用CDN：</strong>将网站模板中静态文件的的根目录URL替换成你的SAE应用地址，如将<strong>http://blog.creatist.cn/</strong>logo.jpg换成<strong>http://mysqecdn.sinaapp.com/</strong>logo.jpg。<span class="small">对于网站程序的一个建议是，设置一个$cdn_base配置变量，然后静态文件的URL根据$cdn_base生成，以后修改CDN只要配置这个变量就可以了。</span></li> 
                         <li>最后，刷新你的网站。然后感受网站加载速度的飞跃。</li> 
                     </ul> 
