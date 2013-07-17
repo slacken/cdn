@@ -1,3 +1,7 @@
-## SaeLayerCDN
+# <span style="color:#f00">è­¦å‘Šï¼šæœ¬é¡¹ç›®å°šæœªå®Œå·¥</span>
 
-Ò»¸öÏÂÎçµÄ³É¹û£¬Ïë·¨ÊÇÀûÓÃSAEÀ´×öCDN¡£<del>¸ü¶àËµÃ÷µµÒÔºó¼ÓÉÏ...</del>Ê¹ÓÃÎÄµµÔÚ[http://creatist.cn/cdn](http://creatist.cn/cdn)
+## LayerBAE
+
+forked from [SaeLayerCDN](https://github.com/Slacken/cdn).
+
+æƒ³æ³•æ˜¯å°†SAEä¸Šçš„çŸ¥ååº”ç”¨SaeLayerCDNç§»æ¤åˆ°BAEä¸Šæ¥å·¥ä½œã€‚
