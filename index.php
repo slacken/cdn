@@ -4,8 +4,8 @@
 /**
  * 设置源静态文件的根目录的URL地址
  * */
-define('STATIC_URL','http://bbs.its.csu.edu.cn/');
-define('STATIC_HOST','');	//特殊应用下可以填写源站域名，会作为http头的hosts传递，正常情况请留空
+define('STATIC_URL','http://www.baidu.com/');
+define('STATIC_HOST','');	//特殊应用下可以填写源站域名，会作为http头的hosts传递，正常情况请留空。
 
 //define('RUN_ENV', 'BAE');	//自定义环境（如不去掉前面的//则自动判断）可选：BAE/SAE/LOCAL 请大写
 

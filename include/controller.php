@@ -40,26 +40,19 @@ class controller{
 				$this->succeed = FALSE;
 			}else{
 				//匹配文件后缀
-//				$temp = array();
-//				if(preg_match('/\.(jpg|jpeg|png|pdf|gif|css|js|zip)$/i', $request,$temp)===1){//暂时先就这几种
-//					//http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
-//					switch($temp[1]){
-//						case 'jpg':{$this->content_type="image/jpeg";}break;
-//						case 'gif':{$this->content_type="image/gif";}break;
-//						case 'png':{$this->content_type="image/png";}break;
-//						case 'css':{$this->content_type="text/css";}break;
-//						case 'js':{$this->content_type="text/javascript";}break;
-//					}
-//				}
 				$mime_types = array(
 					'jpg' => 'image/jpeg',
+					'jpeg' => 'image/jpeg',
 					'gif' => 'image/gif',
 					'png' => 'image/png',
+					'ico' => 'image/jpeg',
 					'css' => 'text/css',
 					'txt' => 'text/plain',
 					'js' => 'text/javascript',
 					'html' => 'text/html',
-					'htm' => 'text/htm',
+					'htm' => 'text/html',
+					'php' => 'text/html',
+					'asp' => 'text/html',
 					'rss' => 'application/atom+xml',
 					'json' => 'application/json',
 					'ogg' => 'audio/ogg',
@@ -67,6 +60,8 @@ class controller{
 					'xml' => 'text/xml',
 					'zip' => 'application/zip',
 					'rar' => 'application/octet-stream',
+					'exe' => 'application/octet-stream',
+					'chm' => 'application/octet-stream',
 					'gz' => 'application/gzip',
 					'gzip' => 'application/gzip',
 					'wav' => 'audio/vnd.wave',
@@ -77,7 +72,11 @@ class controller{
 				$basename = basename($request);
 				$ext = strtolower(substr($basename,strrpos($basename,'.')+1));
 				if(isset($mime_types[$ext])){
-					$this->content_type=$mime_types[$ext];
+					//$this->content_type=$mime_types[$ext];
+				}
+				$direct = false;
+				if(in_array($ext,explode('|',strtolower(DIRECT_EXT)))){
+					$direct = true;
 				}
 			}
 		}
@@ -90,14 +89,14 @@ class controller{
 		}
 		$key = md5($request).'_'.strlen($request).'.cache';
 		$this->hit = $key;
-		$this->handle($request,$key,$delete);
+		$this->handle($request,$key,$delete,$direct);
 		
 	}
 	/**
 	 * 获取内容并输出
 	 * 如果stroage里面不存在，则从URL里面获取
 	 * */
-	private function handle($filename,$key,$delete = false){
+	private function handle($filename,$key,$delete = false,$direct = false){
 		$content = '';
 		if($this->succeed){
 			$storage = storage::gethandle();
@@ -108,21 +107,28 @@ class controller{
 				$return = $storage->delete($key);
 				die(json_encode(array('purge'=>$filename,'key'=>$key,'success'=>$return)));
 			}
-			if($storage->exists($key)){
+			if($storage->exists($key) && !$direct){
 				if($url = $storage->url($key)){
 					$this->locate($url);
 				}
 				$content = $storage->read($key);
+				if(empty($content)){
+					$this->succeed = false;
+					$this->error_type = 'empty_conent';
+				}
 			}else{
 				//$content = @file_get_contents(BASE_URL.$filename);
 				$content = lib::fetch_url(BASE_URL.$filename);
-				$storage->write($key, $content);
-			}
-			if(empty($content)){
-				$this->error_type = 'empty_content';
-				$this->succeed = FALSE;
-			}else{
-				//这里应该有更多的检查
+				if(!is_array($content) || count($content)<2){
+					$this->succeed = false;
+					$this->error_type = 'fetch_error';
+				}elseif($content[0]==200){
+					//返回200，才写入
+					if(!$direct) $storage->write($key, $content[1]);
+				}else{
+					header('HTTP/1.1 '.$content[0]);
+				}
+				$content = $content[1];
 			}
 		}
 		//显示内容

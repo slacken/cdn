@@ -26,7 +26,7 @@ class lib{
 					$f->setHeader('Host',STATIC_HOST);
 				}
 				$content = $f->fetch($url);
-				return $content;
+				return array($f->HttpCode(),$content);
 			break;
 			case 'BAE':
 			case 'LOCAL':
@@ -42,18 +42,23 @@ class lib{
 						curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 					}
 					if(STATIC_HOST){
-						curl_setopt($ch, CURLOPT_HTTPHEADER, 'Host: '.STATIC_HOST);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: '.STATIC_HOST));
 					}
-					return curl_exec($ch);
+					$con = curl_exec($ch);
+					$cod = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+					return array($cod,$con);
 				}else{
 					//否则使用file_get_contents
+					$content = '';
 					if(STATIC_HOST){
 						$opt=array('http'=>array('header'=>'Host: '.STATIC_HOST));
 						$context=stream_context_create($opt);
-						return file_get_contents($url,false,$context);
+						$content = file_get_contents($url,false,$context);
 					}else{
-						return file_get_contents($url);
+						$content = file_get_contents($url);
 					}
+					list($version,$status_code,$msg) = explode(' ',$http_response_header[0], 3);
+					return array($status_code,$content);
 				}
 		}
 	}
