@@ -19,6 +19,7 @@ class controller{
 		$this->succeed = TRUE;
 		
 		$request = ltrim($request,'/');
+		$ext = 'cache';
 		
 		//检测环境
 		if(!RUN_ENV){
@@ -35,6 +36,8 @@ class controller{
 		else{
 			//检查防盗链
 			$referer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
+			@$referer = parse_url($referer);
+			$referer = isset($referer['host'])?$referer['host']:'';
 			if(ALLOW_REGX && !preg_match('/'.ALLOW_REGX.'/i',$referer)){
 				$this->error_type = 'not_allowed_domain';
 				$this->succeed = FALSE;
@@ -87,7 +90,7 @@ class controller{
 			$delete = true;
 			$request = $purge[1];
 		}
-		$key = md5($request).'_'.strlen($request).'.cache';
+		$key = (NO_KEY)?$request:md5($request).'_'.strlen($request).'.'.$ext;
 		$this->hit = $key;
 		$this->handle($request,$key,$delete,$direct);
 		
@@ -108,7 +111,7 @@ class controller{
 				die(json_encode(array('purge'=>$filename,'key'=>$key,'success'=>$return)));
 			}
 			if($storage->exists($key) && !$direct){
-				if($url = $storage->url($key)){
+				if(!NO_LOCATE && $url = $storage->url($key)){
 					$this->locate($url);
 				}
 				$content = $storage->read($key);
@@ -160,6 +163,7 @@ class controller{
 		//302
 		header("HTTP/1.1 302 Moved Temporarily");
 		header("Location:".$url);
+		die();
 	}
 	
 	/**

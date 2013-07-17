@@ -24,7 +24,10 @@ define('ALLOW_REGX','.*');	//设置防盗链允许的[域名]正则表达式
 //define('ALLOW_DOMAIN','^(.+)$');	//允许任意，但不允许浏览器访问
 
 define('MIME','text/html');	//默认MIME类型，可以设为application/octet-stream则对未知项目自动弹出下载
-define('DIRECT_EXT','php|html');	//不进入缓存的扩展名
+define('DIRECT_EXT','php|asp');	//不进入缓存的扩展名，安全起见不要删除PHP
+define('NO_LOCATE',false);	//设置后将不进行跳转而采用read方式，当想保持文件名一致时启用之。
+define('NO_KEY',true);	//启用后将不再使用一串md5编码的key作为文件名
+define('NO_SECOND_FLODER',true);	//启用后将不再使用两层文件夹存储缓存，仅在本地环境、NO_KEY为假时有效
 
 /**
  * 空请求时是否显示文档
