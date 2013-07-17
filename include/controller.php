@@ -156,7 +156,7 @@ class controller{
 		}
 	}
 	
-	private function loacte($url){
+	private function locate($url){
 		//302
 		header("HTTP/1.1 302 Moved Temporarily");
 		header("Location:".$url);
