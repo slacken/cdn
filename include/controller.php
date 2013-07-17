@@ -72,7 +72,7 @@ class controller{
 				$basename = basename($request);
 				$ext = strtolower(substr($basename,strrpos($basename,'.')+1));
 				if(isset($mime_types[$ext])){
-					//$this->content_type=$mime_types[$ext];
+					$this->content_type=$mime_types[$ext];
 				}
 				$direct = false;
 				if(in_array($ext,explode('|',strtolower(DIRECT_EXT)))){
@@ -146,9 +146,9 @@ class controller{
 			return ;
 		}else{
 			if($this->hit){
-				header('Layer-Cache: Hit;key='.$this->hit);
+				header('Layer-Cache: Hit;key='.$this->hit.';ENV='.RUN_ENV);
 			}else{
-				header('Layer-Cache: Miss');
+				header('Layer-Cache: Miss;ENV='.RUN_ENV);
 			}
 			header("Expires: " . date("D, j M Y H:i:s GMT", time()+2592000));//缓存一月
 			header('Content-type: '.$this->content_type);
