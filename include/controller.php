@@ -240,7 +240,7 @@ class controller{
 			$request = $purge[1];
 		}
 		$key = (NO_KEY)?$request:md5($request).'_'.strlen($request).'.'.$ext;
-		$this->hit = $key;
+		$this->hit = false;
 		$this->handle($request,$key,$delete,$direct);
 		
 	}
@@ -264,6 +264,7 @@ class controller{
 					$this->locate($url);
 				}
 				$content = $storage->read($key);
+				$this->hit = $key;
 				if(empty($content)){
 					$this->succeed = false;
 					$this->error_type = 'empty_conent';
