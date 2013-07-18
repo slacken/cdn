@@ -31,8 +31,12 @@ class StorageHandle{
 	}
 	private function get_file($key,$pre = true){
 		if(NO_KEY || NO_SECOND_FLODER){
+			$dir = $this->data_dir.$key;
+			if(!is_dir($dir)){
+				if(!mkdir($dir,0777,true)) die(json_encode(array('error'=>'cannot_make_dir')));
+			}
 			if(!$pre) return $key;
-			return $this->data_dir.$key;
+			return $dir;
 		}
 		$letter1 = substr($key,0,1);
 		$letter2 = substr($key,0,2);
