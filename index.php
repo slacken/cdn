@@ -7,13 +7,15 @@
 define('STATIC_URL','http://www.baidu.com/');
 define('STATIC_HOST','');	//特殊应用下可以填写源站域名，会作为http头的hosts传递，正常情况请留空。
 
-//define('RUN_ENV', 'BAE');	//自定义环境（如不去掉前面的//则自动判断）可选：BAE/SAE/LOCAL 请大写
+define('RUN_ENV', 'GCS');	//自定义环境（如不去掉前面的//则自动判断）可选：BAE/SAE/LOCAL 请大写
 
 /**
  * SAE storage的domain，BAE的bucket，本地的存储路径（相对于index.php的相对目录，前无斜杠后有斜杠）
  * */
-define('DOMAIN','cdn');	//SAE or BAE
+define('DOMAIN','llllllayer');	//SAE or BAE
 //define('DOMAIN','data/cache/');	//本地
+//define('CS_AK','dummy');	//自定义AK/SK，通常不需要
+//define('CS_SK','dummy');
 
 define('PURGE_KEY','purge');	//访问http://domain/PURGE_KEY/path/to/file来刷新缓存
 
@@ -71,7 +73,6 @@ define('BASE_URL', rtrim(STATIC_URL,'/').'/');
 //define('IS_SAE', defined('SAE_SECRETKEY'));
 
 //自定义环境
-//define('RUN_ENV', 'BAE');	//可选：BAE/SAE/LOCAL 请大写
 
 if(!defined('RUN_ENV')){
 	if(defined('SAE_SECRETKEY')){
