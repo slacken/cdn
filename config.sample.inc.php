@@ -20,6 +20,7 @@
 	define('NO_LOCATE',false);	//设置后将不进行跳转而采用read读取方式，可能会降低速度并增加流量。仅当遇到问题时启用。
 	define('NO_KEY',true);	//启用后将不再使用一串md5编码的key作为文件名，当想保持文件名一致时启用之。
 	define('NO_SECOND_FLODER',true);	//启用后将不再使用两层文件夹存储缓存，仅在本地环境、NO_KEY为假时有效。
+	define('STATIC_HOST','');	//可以留空，也可以在这里填写你的源站域名，而在STATIC_URL中填写IP，减少域名解析的时间。
 	
 	/**********高级设定**********/
 	//define('RUN_ENV', 'GCS');	//自定义运行环境（如不去掉前面的//则自动判断）可选：BAE/SAE/GCS/LOCAL 请大写
