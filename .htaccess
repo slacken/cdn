@@ -1,8 +1,6 @@
-RewriteEngine on
-RewriteBase /LayerBAE/
-RewriteCond $1 ^(index\.php)?$ [OR]
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-
-RewriteRule ^(.*)$ - [S=1]
-RewriteRule ^(.*)$ index.php/$1 [L]
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
