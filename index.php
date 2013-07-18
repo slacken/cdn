@@ -1,44 +1,12 @@
 <?php
 @ob_start();
-
-/**
- * 设置源静态文件的根目录的URL地址
- * */
-define('STATIC_URL','http://www.baidu.com/');
-define('STATIC_HOST','');	//特殊应用下可以填写源站域名，会作为http头的hosts传递，正常情况请留空。
-
-define('RUN_ENV', 'GCS');	//自定义环境（如不去掉前面的//则自动判断）可选：BAE/SAE/LOCAL 请大写
-
-/**
- * SAE storage的domain，BAE的bucket，本地的存储路径（相对于index.php的相对目录，前无斜杠后有斜杠）
- * */
-define('DOMAIN','llllllayer');	//SAE or BAE
-//define('DOMAIN','data/cache/');	//本地
-//define('CS_AK','dummy');	//自定义AK/SK，通常不需要
-//define('CS_SK','dummy');
-
-define('PURGE_KEY','purge');	//访问http://domain/PURGE_KEY/path/to/file来刷新缓存
-
-define('ALLOW_REGX','.*');	//设置防盗链允许的[域名]正则表达式
-//define('ALLOW_DOMAIN','^(best33\.com|.*\.best33\.com|)$');	//允许best33.com，*.best33.com，浏览器直接访问
-//define('ALLOW_DOMAIN','^(best33\.com|.*\.best33\.com)$');	//允许best33.com，*.best33.com，不允许浏览器直接访问
-//define('ALLOW_DOMAIN','^(.*)$');	//允许任意，允许浏览器访问
-//define('ALLOW_DOMAIN','^(.+)$');	//允许任意，但不允许浏览器访问
-
-define('MIME','text/html');	//默认MIME类型，可以设为application/octet-stream则对未知项目自动弹出下载
-define('DIRECT_EXT','php|asp');	//不进入缓存的扩展名，安全起见不要删除PHP
-define('NO_LOCATE',false);	//设置后将不进行跳转而采用read方式，当想保持文件名一致时启用之。
-define('NO_KEY',true);	//启用后将不再使用一串md5编码的key作为文件名
-define('NO_SECOND_FLODER',true);	//启用后将不再使用两层文件夹存储缓存，仅在本地环境、NO_KEY为假时有效
-
-/**
- * 空请求时是否显示文档
- * */
-define('WELCOME_DOC',TRUE);
-
-
-
-
+if(is_file('config.inc.php')){
+	require 'config.inc.php';
+}elseif(is_file('config.sample.inc.php')){
+	require 'config.sample.inc.php';
+}else{
+	die('Missing Config File.');
+}
 /**
  * 运行环境:development/testing/production
  * */
@@ -70,10 +38,7 @@ define('BASE_PATH',dirname(__FILE__).'/');
 
 define('BASE_URL', rtrim(STATIC_URL,'/').'/');
 
-//define('IS_SAE', defined('SAE_SECRETKEY'));
-
-//自定义环境
-
+//自动判断环境
 if(!defined('RUN_ENV')){
 	if(defined('SAE_SECRETKEY')){
 		define('RUN_ENV','SAE');
