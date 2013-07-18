@@ -36,7 +36,7 @@ class StorageHandle{
 	}
 	
 	public function delete($name){
-		return $this->instance->delete_object($this->domain,$name);
+		return $this->instance->delete_object($this->domain,$this->get_file($name));
 	}
 	
 	private function get_file($name){
