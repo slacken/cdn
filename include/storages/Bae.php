@@ -2,9 +2,6 @@
 
 if ( ! defined('BASE_PATH')) exit('No direct script access allowed');
 
-/**
- * 封装SAE storage
- * */
 class StorageHandle{
 	
 	public $instance;
