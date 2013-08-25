@@ -11,5 +11,11 @@ function includeloader($class){
 }
 
 spl_autoload_register('includeloader');
-
-new controller(isset($_GET['q'])?$_GET['q']:'');
+//die($_SERVER['QUERY_STRING']);
+new controller(isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'');
+//print_r($_SERVER);die();
+//$url = $_SERVER['DOCUMENT_ROOT'].(isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'');
+//$url = str_ireplace('\\','/',$url);
+//$base = str_ireplace('\\','/',BASE_PATH);
+//$test = (explode($base,$url));
+//new controller($test[1]);	//做path_info兼容
