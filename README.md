@@ -1,3 +1,5 @@
+**Notice: SAELayerCDN is no longer maintained**
+
 ## Layer
 
 forked from [SaeLayerCDN](https://github.com/Slacken/cdn).
